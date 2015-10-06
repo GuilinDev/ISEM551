@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html data-ng-app="myAngularModule">
     <head>
         <meta charset="UTF-8">
         <meta name="robots" content="noindex">
@@ -9,12 +9,12 @@
         <title>Game Title</title>
 
     </head>
-    <body>
+    <body data-ng-controller="myBaseController">
         <div class="container">
             <label>Click the Button to Start!</label>
             <p />
-            <button type="button" class="btn" onclick="$scope.gatewayFunction()">Click to Create Loading Bar on Canvas!</button>
-            <div class="" style="width:800px; margin:30px"></div>
+            <button type="button" class="btn" data-ng-click="gatewayFunction()">Click to Create Loading Bar on Canvas!</button>
+            <div class="" style="width:800px; margin:30px">Wait until loading is complete...</div>
         </div>
 
         <script src="library/angular.min.js"></script>
