@@ -2,70 +2,75 @@
  * Created by Guilin on 10/4/2015.
  */
 
-function gatewayFunction() {
+$scope = {};
+$scope.gatewayFunction = function () {
     console.log("Inside JS file===>");
     if (isCanvasSupport()){
+        console.log("Canvas is Supported");
         var loadingCanvas = document.createElement('canvas');
         loadingCanvas.width = 400;
         loadingCanvas.height = 100;
         var loadingCanvasWidth = loadingCanvas.width;
         var loadingCanvasHeight = loadingCanvas.height;
         document.body.appendChild(loadingCanvas);
+        var canvasLoading = new lightBarLoader(loadingCanvas, loadingCanvasWidth, loadingCanvasHeight);
+
+        canvasLoading.init();
+        setupRAF();
     }
 };
 
 // Check Canvas Support
 var isCanvasSupport = function(){
     var element = document.createElement('canvas');
-    console.log("Is Canvas Supported? " + element);
-    return (element.getContext() && element.getContext('2d'));
+    console.log("Is Canvas Supported? " + isNotEmpty(element));
+    return !!(element.getContext && element.getContext('2d'));
 };
 
 // Light Bar Loader
-var lightBarLoader = function (targetCanvas, targetCanvasWidth, targetCanvasHeight){
+var lightBarLoader = function (c, cw, ch){
 
     // Declare and initialize elements of Canvas
     var _this = this;
-    this.c = targetCanvas;
+    this.c = c;
     this.ctx = c.getContext('2d');
-    this.cw = targetCanvasWidth;
-    this.ch = targetCanvasHeight;
+    this.cw = cw;
+    this.ch = ch;
 
     this.loaded = 0;
-    this.loaderSpeed = 0.5;
-    this.loaderWidth = 320;
+    this.loaderSpeed = .5;
     this.loaderHeight = 10;
-
+    this.loaderWidth = 310;
     this.loader = {
         x: (this.cw/2) - (this.loaderWidth/2),
         y: (this.ch/2) - (this.loaderHeight/2)
     };
-
     this.particles = [];
-    this.particlesLift = 180;
-    this.hueStart = 0;
+    this.particleLift = 180;
+    this.hueStart = 0
     this.hueEnd = 120;
     this.hue = 0;
-    this.gravity = 0.15;
+    this.gravity = .15;
     this.particleRate = 4;
 
     // Initialize the Canvas
-    this.init = function() {
+    this.init = function(){
         this.loop();
     };
 
     // Utility Functions
     this.rand = function(rMi, rMa){
-        return ((Math.random()*(rMa - rMi + 1) + rMi));
-    }
+        return ~~((Math.random()*(rMa-rMi+1))+rMi);
+    };
     this.hitTest = function(x1, y1, w1, h1, x2, y2, w2, h2){
         return !(x1 + w1 < x2 || x2 + w2 < x1 || y1 + h1 < y2 || y2 + h2 < y1);
-    }
+    };
+
 
     // Update Loader
-    this.updateLoader = function() {
-        if (this.loader < 100){
-            this.loader += this.loaderSpeed;
+    this.updateLoader = function(){
+        if(this.loaded < 100){
+            this.loaded += this.loaderSpeed;
         } else {
             this.loaded = 0;
         }
@@ -142,4 +147,55 @@ var lightBarLoader = function (targetCanvas, targetCanvasWidth, targetCanvasHeig
         this.ctx.clearRect(0,0,this.cw,this.ch);
         this.ctx.globalCompositeOperation = 'lighter';
     };
+
+    // Run the loop of Animation
+    this.loop = function(){
+        var loopIt = function(){
+            requestAnimationFrame(loopIt, _this.c);
+            _this.clearCanvas();
+
+            _this.createParticles();
+
+            _this.updateLoader();
+            _this.updateParticles();
+
+            _this.renderLoader();
+            _this.renderParticles();
+
+        };
+        loopIt();
+    };
+};
+
+// Set up request Animation Frame
+var setupRAF = function(){
+    var lastTime = 0;
+    var vendors = ['ms', 'moz', 'webkit', 'o'];
+    for(var x = 0; x < vendors.length && !window.requestAnimationFrame; ++x){
+        window.requestAnimationFrame = window[vendors[x]+'RequestAnimationFrame'];
+        window.cancelAnimationFrame = window[vendors[x]+'CancelAnimationFrame'] || window[vendors[x]+'CancelRequestAnimationFrame'];
+    };
+
+    if(!window.requestAnimationFrame){
+        window.requestAnimationFrame = function(callback, element){
+            var currTime = new Date().getTime();
+            var timeToCall = Math.max(0, 16 - (currTime - lastTime));
+            var id = window.setTimeout(function() { callback(currTime + timeToCall); }, timeToCall);
+            lastTime = currTime + timeToCall;
+            return id;
+        };
+    };
+
+    if (!window.cancelAnimationFrame){
+        window.cancelAnimationFrame = function(id){
+            clearTimeout(id);
+        };
+    };
+};
+
+function isNotEmpty(ob){
+    if (typeof ob !=="undefined" && ob !== null){
+        return true;
+    }
+    return false;
 };

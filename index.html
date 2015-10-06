@@ -1,33 +1,23 @@
 <!DOCTYPE html>
-<html xmlns:width="http://www.w3.org/1999/xhtml" xmlns:bottom="http://www.w3.org/1999/xhtml">
+<html>
     <head>
         <meta charset="UTF-8">
         <meta name="robots" content="noindex">
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+        <link rel="stylesheet" type="text/css" href="css/baseStyle.css">
 
         <title>Game Title</title>
-        <style>
-            body{
-                background: #FFE6E6;
-            }
-            div{
-                margin-top: 20px;
-            }
-            canvas{
-                background: #111;
-                border: 1px solid #171717;
-                display: block;
-            }
-        </style>
+
     </head>
     <body>
         <div class="container">
-            <label>Click the Game Button to Start!</label>
+            <label>Click the Button to Start!</label>
             <p />
-            <button type="button" class="btn" onclick="gatewayFunction()">Click to Start!</button>
+            <button type="button" class="btn" onclick="$scope.gatewayFunction()">Click to Create Loading Bar on Canvas!</button>
             <div class="" style="width:800px; margin:30px"></div>
         </div>
 
-    <script src="js/baseController.js"></script>
+        <script src="library/angular.min.js"></script>
+        <script src="js/baseController.js"></script>
     </body>
 </html>
