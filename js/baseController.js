@@ -5,11 +5,11 @@
 var myAngularModule = angular.module('myAngularModule',[], function(){
 
 });
-myAngularModule.controller('myBaseController', function($scope) {
+myAngularModule.controller('myBaseController', ['$scope', '$log',function($scope, $log) {
     $scope.gatewayFunction = function () {
         console.log("Inside JS file===>");
         if (isCanvasSupport()) {
-            console.log("Canvas is Supported");
+            $log.log("Canvas is Supported");
             var loadingCanvas = document.createElement('canvas');
             loadingCanvas.width = 400;
             loadingCanvas.height = 100;
@@ -26,7 +26,7 @@ myAngularModule.controller('myBaseController', function($scope) {
 // Check Canvas Support
     var isCanvasSupport = function () {
         var element = document.createElement('canvas');
-        console.log("Is Canvas Supported? " + isNotEmpty(element));
+        $log.log("Is Canvas Supported? " + isNotEmpty(element));
         return !!(element.getContext && element.getContext('2d'));
     };
 
@@ -210,4 +210,4 @@ myAngularModule.controller('myBaseController', function($scope) {
         }
         return false;
     };
-});
+}]);
