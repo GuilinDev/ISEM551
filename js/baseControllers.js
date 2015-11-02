@@ -5,7 +5,7 @@
 var myAngularModule = angular.module('myAngularModule',[], function(){
 
 });
-myAngularModule.controller('myBaseController', function($scope) {
+myAngularModule.controller('myBaseController', ['$scope', function($scope) {
     $scope.gatewayFunction = function () {
         console.log("Inside JS file===>");
         if (isCanvasSupport()) {
@@ -55,7 +55,7 @@ myAngularModule.controller('myBaseController', function($scope) {
         this.hue = 0;
         this.gravity = .15;
         this.particleRate = 4;
-
+        
         // Initialize the Canvas
         this.init = function () {
             this.loop();
@@ -156,20 +156,26 @@ myAngularModule.controller('myBaseController', function($scope) {
 
         // Run the loop of Animation
         this.loop = function () {
-            var loopIt = function () {
-                requestAnimationFrame(loopIt, _this.c);
-                _this.clearCanvas();
+            
+            var loopFlag = true;
+            var loopIt = function (loopFlag) {
+                console.log("Inside closure===> " + loopFlag);
+                while (loopFlag){
+                    requestAnimationFrame(loopIt, _this.c);
+                    _this.clearCanvas();
+                                
+                    _this.createParticles();                            
 
-                _this.createParticles();
+                    _this.updateLoader();
+                    _this.updateParticles();
 
-                _this.updateLoader();
-                _this.updateParticles();
-
-                _this.renderLoader();
-                _this.renderParticles();
+                    _this.renderLoader();
+                    _this.renderParticles();
+                    loopFlag = false;
+                }                
 
             };
-            loopIt();
+            loopIt(loopFlag);
         };
     };
 
@@ -204,10 +210,16 @@ myAngularModule.controller('myBaseController', function($scope) {
         ;
     };
 
-    function isNotEmpty(ob) {
+    var isNotEmpty = function (ob) {
         if (typeof ob !== "undefined" && ob !== null) {
             return true;
         }
         return false;
     };
-});
+    
+    $scope.isDisabled = false;
+    $scope.disableButton = function() {
+        console.log("Inside disableButton===>");
+        $scope.isDisabled = true;    
+    };
+}]);
