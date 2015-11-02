@@ -5,11 +5,11 @@
 var myAngularModule = angular.module('myAngularModule',[], function(){
 
 });
-myAngularModule.controller('myBaseController', ['$scope', '$log',function($scope, $log) {
+myAngularModule.controller('myBaseController', function($scope) {
     $scope.gatewayFunction = function () {
         console.log("Inside JS file===>");
         if (isCanvasSupport()) {
-            $log.log("Canvas is Supported");
+            console.log("Canvas is Supported");
             var loadingCanvas = document.createElement('canvas');
             loadingCanvas.width = 400;
             loadingCanvas.height = 100;
@@ -26,7 +26,7 @@ myAngularModule.controller('myBaseController', ['$scope', '$log',function($scope
 // Check Canvas Support
     var isCanvasSupport = function () {
         var element = document.createElement('canvas');
-        $log.log("Is Canvas Supported? " + isNotEmpty(element));
+        console.log("Is Canvas Supported? " + isNotEmpty(element));
         return !!(element.getContext && element.getContext('2d'));
     };
 
@@ -179,7 +179,7 @@ myAngularModule.controller('myBaseController', ['$scope', '$log',function($scope
         var vendors = ['ms', 'moz', 'webkit', 'o'];
         for (var x = 0; x < vendors.length && !window.requestAnimationFrame; ++x) {
             window.requestAnimationFrame = window[vendors[x] + 'RequestAnimationFrame'];
-            window.cancelAnimationFrame = window[vendors[x] + 'CancelAnimationFrame'] || window[vendors[x] + 'CancelRequestAnimationFrame'];
+            window.cancelAnimationFrame = window[vendors[x] + 'CancelAnimationFrame'] || window[vendors[x] +        'CancelRequestAnimationFrame'];
         }
         ;
 
@@ -210,4 +210,4 @@ myAngularModule.controller('myBaseController', ['$scope', '$log',function($scope
         }
         return false;
     };
-}]);
+});
