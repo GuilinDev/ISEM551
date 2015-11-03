@@ -7,7 +7,6 @@ var myAngularModule = angular.module('myAngularModule',[], function(){
 });
 myAngularModule.controller('myBaseController', ['$scope', function($scope) {
     $scope.gatewayFunction = function () {
-        console.log("Inside JS file===>");
         if (isCanvasSupport()) {
             console.log("Canvas is Supported");
             var loadingCanvas = document.createElement('canvas');
@@ -16,12 +15,14 @@ myAngularModule.controller('myBaseController', ['$scope', function($scope) {
             var loadingCanvasWidth = loadingCanvas.width;
             var loadingCanvasHeight = loadingCanvas.height;
             document.body.appendChild(loadingCanvas);
+            
             var canvasLoading = new lightBarLoader(loadingCanvas, loadingCanvasWidth, loadingCanvasHeight);
 
             canvasLoading.init();
             setupRAF();
         }
     };
+    
 
 // Check Canvas Support
     var isCanvasSupport = function () {
@@ -157,25 +158,32 @@ myAngularModule.controller('myBaseController', ['$scope', function($scope) {
         // Run the loop of Animation
         this.loop = function () {
             
-            var loopFlag = true;
-            var loopIt = function (loopFlag) {
-                console.log("Inside closure===> " + loopFlag);
-                while (loopFlag){
-                    requestAnimationFrame(loopIt, _this.c);
-                    _this.clearCanvas();
+            var executed = 0;                   
+                var loopIt = function () {
+                    if (executed < 200){ // half of canvas width
+                        executed++;
+                        requestAnimationFrame(loopIt, _this.c);
+                        _this.clearCanvas();
                                 
-                    _this.createParticles();                            
+                        _this.createParticles();                            
 
-                    _this.updateLoader();
-                    _this.updateParticles();
+                        _this.updateLoader();
+                        _this.updateParticles();
 
-                    _this.renderLoader();
-                    _this.renderParticles();
-                    loopFlag = false;
-                }                
-
-            };
-            loopIt(loopFlag);
+                        _this.renderLoader();
+                        _this.renderParticles();
+                    } else { // create a new canvas
+                        var loadingCanvas = document.createElement('canvas');
+                        loadingCanvas.width = 800;
+                        loadingCanvas.height = 300;
+                        var loadingCanvasWidth = loadingCanvas.width;
+                        var loadingCanvasHeight = loadingCanvas.height;
+                        document.body.appendChild(loadingCanvas);
+                    }
+               
+                };           
+            
+            loopIt();
         };
     };
 
@@ -219,7 +227,6 @@ myAngularModule.controller('myBaseController', ['$scope', function($scope) {
     
     $scope.isDisabled = false;
     $scope.disableButton = function() {
-        console.log("Inside disableButton===>");
         $scope.isDisabled = true;    
     };
 }]);

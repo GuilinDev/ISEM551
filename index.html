@@ -11,10 +11,20 @@
     </head>
     <body data-ng-controller="myBaseController">
         <div class="container">
-            <label>Click the Button to Start!</label>
+            <label>Click to Load!</label>
             <p />
-            <button type="button" class="btn btn-info btn-lg" data-ng-click="gatewayFunction();disableButton()" data-ng-disabled="isDisabled">Click to Create Loading Bar on Canvas!</button>
+            <button type="button" 
+                    class="btn btn-info btn-lg" 
+                    data-ng-click="gatewayFunction();disableButton()" 
+                    data-ng-disabled="isDisabled">
+                Click to Create Loading Bar on Canvas!
+            </button>
             <div class="" style="width:800px; margin:30px">Wait until loading is complete...</div>
+            <button type="button"
+                    class="btn"
+                    data-ng-show="showGameButton()">
+                Start Game! 
+            </button>
         </div>
 
         <script src="library/angular.min.js"></script>
