@@ -10,6 +10,7 @@ myAngularModule.controller('myBaseController', ['$scope', function($scope) {
         if (isCanvasSupport()) {
             console.log("Canvas is Supported");
             var loadingCanvas = document.createElement('canvas');
+            loadingCanvas.id = "loadingCanvasID";
             loadingCanvas.width = 400;
             loadingCanvas.height = 100;
             var loadingCanvasWidth = loadingCanvas.width;
@@ -172,13 +173,31 @@ myAngularModule.controller('myBaseController', ['$scope', function($scope) {
 
                         _this.renderLoader();
                         _this.renderParticles();
-                    } else { // create a new canvas
-                        var loadingCanvas = document.createElement('canvas');
-                        loadingCanvas.width = 800;
-                        loadingCanvas.height = 300;
-                        var loadingCanvasWidth = loadingCanvas.width;
-                        var loadingCanvasHeight = loadingCanvas.height;
-                        document.body.appendChild(loadingCanvas);
+                    } else { 
+                        // hide the loading bar canvas
+                        var loadingC = document.getElementById("loadingCanvasID");
+                        loadingC.style.visibility = "hidden";
+                        
+                        // hide information and loading button
+                        document.getElementById("loadLabel").style.visibility = "hidden";
+                        document.getElementById("loadGameBtn").style.visibility = "hidden";
+                        document.getElementById("loadingInfo").style.visibility = "hidden";
+                        
+                        // create a new canvas for game
+                        var gameCanvas = document.createElement('canvas');
+                        var gameContext = gameCanvas.getContext("2d");
+                        gameCanvas.id = "gameCanvasID";
+                        gameCanvas.width = 800;
+                        gameCanvas.height = 350;
+                        
+                        gameContext.textAlign = 'center';
+                        gameContext.fillStyle = 'blue';
+                        gameContext.font = "30px Arial";
+                        gameContext.fillText("Game will be on this Canvas!", 350, 120);
+                                                
+                        var gameCanvasWidth = gameCanvas.width;
+                        var gameCanvasHeight = gameCanvas.height;
+                        document.body.appendChild(gameCanvas);
                     }
                
                 };           
