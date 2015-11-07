@@ -11,6 +11,17 @@
     </head>
     <body data-ng-controller="myBaseController">
         <div class="container">
+            <div class="nav">
+                <div class="col-md-3">
+                    <ul class="nav">
+                        <li><a href="#list1">Home Page</a></li>
+                        <li><a href="#list2">About</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="col-md-9">
+                <div ng-view></div>
+            </div>
             <label id = "loadLabel">Click to Load!</label>
             <p />
             <button id = "loadGameBtn"
@@ -20,6 +31,7 @@
                     data-ng-disabled="isDisabled">
                 Click to Create Loading Bar on Canvas!
             </button>
+            
             <div id="loadingInfo" style="width:800px; margin:30px">Wait until loading is complete...</div>
         </div>
 

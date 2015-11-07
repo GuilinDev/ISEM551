@@ -249,3 +249,8 @@ myAngularModule.controller('myBaseController', ['$scope', function($scope) {
         $scope.isDisabled = true;    
     };
 }]);
+
+//Routes
+myAngularModule.config([
+    
+]);
