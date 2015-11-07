@@ -7,35 +7,29 @@
         <link rel="stylesheet" type="text/css" href="css/baseStyle.css">
 
         <title>Game Title</title>
+        
+        <script src="library/angular.min.js"></script>
+        <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.0-beta.1/angular-route.js"></script>
+        <script src="js/baseModule.js"></script>
 
     </head>
     <body data-ng-controller="myBaseController">
+        
         <div class="container">
-            <div class="nav">
+            <div class="row">
                 <div class="col-md-3">
                     <ul class="nav">
-                        <li><a href="#list1">Home Page</a></li>
-                        <li><a href="#list2">About</a></li>
+                        <li><a href="#GamePage"> Game Page </a></li>
+                        <li><a href="#IntroductionPage"> Introduction </a></li>
                     </ul>
                 </div>
+                <div class="col-md-9">
+                    <div ng-view></div>
+                </div>
             </div>
-            <div class="col-md-9">
-                <div ng-view></div>
-            </div>
-            <label id = "loadLabel">Click to Load!</label>
-            <p />
-            <button id = "loadGameBtn"
-                    type="button" 
-                    class="btn btn-info btn-lg" 
-                    data-ng-click="gatewayFunction();disableButton()" 
-                    data-ng-disabled="isDisabled">
-                Click to Create Loading Bar on Canvas!
-            </button>
-            
-            <div id="loadingInfo" style="width:800px; margin:30px">Wait until loading is complete...</div>
         </div>
+        
+        <p />
 
-        <script src="library/angular.min.js"></script>
-        <script src="js/baseControllers.js"></script>
     </body>
 </html>

@@ -2,7 +2,7 @@
  * Created by Guilin on 10/4/2015.
  */
 
-var myAngularModule = angular.module('myAngularModule',[], function(){
+var myAngularModule = angular.module('myAngularModule',['ngRoute'], function(){
 
 });
 myAngularModule.controller('myBaseController', ['$scope', function($scope) {
@@ -250,7 +250,23 @@ myAngularModule.controller('myBaseController', ['$scope', function($scope) {
     };
 }]);
 
-//Routes
-myAngularModule.config([
+// Controller for introduction page
+myAngularModule.controller('mySecondController', ['$scope', function($scope) {
     
-]);
+}]);
+
+// Routes
+myAngularModule.config(function($routeProvider) {
+    $routeProvider.
+      when('/GamePage', {
+        templateUrl: 'templates/game.html',
+        controller: 'myBaseController'
+    }).
+      when('/IntroductionPage', {
+        templateUrl: 'templates/introduction.html',
+        controller: 'mySecondController'
+      }).
+      otherwise({
+        redirectTo: '/AddNewOrder'
+      });
+});
