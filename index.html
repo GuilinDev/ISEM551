@@ -19,13 +19,22 @@
             <div class="row">
                 <div class="col-md-3">
                     <ul class="nav">
-                        <li><a href="#GamePage"> Game Page </a></li>
-                        <li><a href="#IntroductionPage"> Introduction </a></li>
+                        <li><a href="#GamePage"> Game Page (Route1) </a></li>
+                        <li><a href="#IntroductionPage"> Introduction (Route2) </a></li>
                     </ul>
                 </div>
                 <div class="col-md-9">
                     <div ng-view></div>
                 </div>
+            </div>
+            
+            <div>
+                <button id="fetchHTTPService" class="btn" data-ng-click="fetchHTTP()">HTTP Service Test</button>
+            </div>
+            <div>
+                <br />
+                HTTP Service Results:<br>
+                <input type="text" name="firstname" value="{{data}}">
             </div>
         </div>
         
