@@ -28,14 +28,15 @@
                 </div>
             </div>
             
-            <div>
+            <div data-ng-controller="mySecondController">
                 <button id="fetchHTTPService" class="btn" data-ng-click="fetchHTTP()">HTTP Service Test</button>
+                <div>
+                    <hr>
+                    HTTP Service Results from "testHTTP.html":<br>
+                    <input type="text" data-ng-model="data" value="{{data}}" placeholder="httpService">                
+                </div>
             </div>
-            <div>
-                <br />
-                HTTP Service Results:<br>
-                <input type="text" name="firstname" value="{{data}}">
-            </div>
+            
         </div>
         
         <p />
